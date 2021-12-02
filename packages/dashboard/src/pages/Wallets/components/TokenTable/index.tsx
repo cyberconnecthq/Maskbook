@@ -102,14 +102,15 @@ export const TokenTable = memo<TokenTableProps>(({ selectedChainId }) => {
         })
     }, [selectedChainId, networks])
 
+    const trustedERC20TokensOnSelectedNetwork = useMemo(
+        () => trustedERC20Tokens.filter((x) => !selectedChainId || x.chainId === selectedChainId) || [],
+        [trustedERC20Tokens, selectedChainId],
+    )
     const {
         error: detailedTokensError,
         loading: detailedTokensLoading,
         value: detailedTokens,
-    } = useAssets(
-        trustedERC20Tokens.filter((x) => !selectedChainId || x.chainId === selectedChainId) || [],
-        selectedChainId === null ? 'all' : selectedChainId,
-    )
+    } = useAssets(trustedERC20TokensOnSelectedNetwork, selectedChainId === null ? 'all' : selectedChainId)
 
     const _assetsWithNativeToken = useMemo(() => {
         if (selectedChainId) return detailedTokens
