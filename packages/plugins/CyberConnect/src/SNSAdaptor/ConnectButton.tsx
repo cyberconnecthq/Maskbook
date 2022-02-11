@@ -4,10 +4,10 @@ import { useWeb3, isSameAddress } from '@masknet/web3-shared-evm'
 import { useAccount, usePluginIDContext, NetworkPluginID, usePluginWeb3StateContext } from '@masknet/plugin-infra'
 import CyberConnect, { Env } from '@cyberlab/cyberconnect'
 import { PluginCyberConnectRPC } from '../messages'
-import classNames from 'classnames'
 import { CircularProgress, useTheme, Typography } from '@mui/material'
 import { useAsync } from 'react-use'
-const useStyles = makeStyles()((theme) => ({
+
+const useStyles = makeStyles()(() => ({
     button: {
         width: '350px',
         display: 'flex',
@@ -86,7 +86,7 @@ const Logo = function () {
     )
 }
 export default function ConnectButton({ address }: { address: string }) {
-    const { classes } = useStyles()
+    const { classes, cx } = useStyles()
     const web3 = useWeb3()
     const myAddress = useAccount()
     const [cc, setCc] = useState<CyberConnect | null>(null)
@@ -135,7 +135,7 @@ export default function ConnectButton({ address }: { address: string }) {
         </Typography>
     ) : !isSameAddress(myAddress, address) ? (
         <div
-            className={classNames(classes.button, {
+            className={cx(classes.button, {
                 [classes.isFollowing]: isFollowing,
             })}
             onClick={() => {

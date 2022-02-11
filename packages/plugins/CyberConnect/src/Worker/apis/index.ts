@@ -100,3 +100,7 @@ export async function fetchFollowStatus(
     const res = await query(data)
     return res
 }
+export async function fetchBlob(url: string) {
+    const x = await fetch(url)
+    return x.blob()
+}
